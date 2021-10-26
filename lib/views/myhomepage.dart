@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'loginresult.dart';
 // ignore: library_prefixes
 import '../utils/constants.dart' as Constants;
+// ignore: library_prefixes
+import '../controllers/usercontroller.dart' as UserController;
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -60,11 +62,21 @@ class _MyHomePageState extends State<MyHomePage> {
   void _doLogin(BuildContext context) {
     // This call to send request login to BE if the input is good
 
+    // Reset error for another attempt
     _setErrorMessage("");
 
     if (_isInputValid()) {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const LoginResult()));
+      UserController.getUserByUserNamePassword(
+          _usernameController.text, _passwordController.text, (user) {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => LoginResult(
+                      user: user,
+                    )));
+      }, (error) {
+        _setErrorMessage(error.description);
+      });
     } else {
       _setErrorMessage(Constants.LOGIN_ERROR_EMPTY);
     }
