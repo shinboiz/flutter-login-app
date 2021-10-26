@@ -13,18 +13,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Flutter Login'),
     );
   }
 }
@@ -49,6 +40,9 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  String _loginError = "";
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   void _incrementCounter() {
     setState(() {
@@ -61,6 +55,28 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  bool _isInputValid() {
+    // This call to validate the input
+    // If the input is qualified a True will be returned, or False otherwise
+    return _usernameController.text.isNotEmpty &&
+        _passwordController.text.isNotEmpty;
+  }
+
+  void _doLogin() {
+    // This call to send request login to BE if the input is good
+
+    setState(() {
+      _loginError = "";
+    });
+
+    if (_isInputValid()) {
+    } else {
+      setState(() {
+        _loginError = "Please enter your username and password\n\n";
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -69,6 +85,41 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+
+    TextStyle style = const TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+
+    final usernameField = TextFormField(
+      controller: _usernameController,
+      obscureText: false,
+      style: style,
+      decoration: const InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+          hintText: "user name"),
+    );
+
+    final passwordField = TextFormField(
+      controller: _passwordController,
+      obscureText: true,
+      style: style,
+      decoration: const InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+          hintText: "password"),
+    );
+
+    final loginButton = Material(
+      elevation: 5.0,
+      borderRadius: BorderRadius.circular(5.0),
+      color: Colors.green,
+      child: MaterialButton(
+        padding: const EdgeInsets.fromLTRB(30.0, 15.0, 30.0, 15.0),
+        onPressed: _doLogin,
+        child: Text("Login",
+            textAlign: TextAlign.center,
+            style: style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    );
+
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -78,31 +129,42 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+        child: Container(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            // Column is also a layout widget. It takes a list of children and
+            // arranges them vertically. By default, it sizes itself to fit its
+            // children horizontally, and tries to be as tall as its parent.
+            //
+            // Invoke "debug painting" (press "p" in the console, choose the
+            // "Toggle Debug Paint" action from the Flutter Inspector in Android
+            // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
+            // to see the wireframe for each widget.
+            //
+            // Column has various properties to control how it sizes itself and
+            // how it positions its children. Here we use mainAxisAlignment to
+            // center the children vertically; the main axis here is the vertical
+            // axis because Columns are vertical (the cross axis would be
+            // horizontal).
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Visibility(
+                visible: _loginError.isNotEmpty,
+                child: Text(
+                  _loginError,
+                  style: const TextStyle(
+                    fontSize: 18.0,
+                    color: Colors.red,
+                  ),
+                ),
+              ),
+              usernameField,
+              const SizedBox(height: 10.0),
+              passwordField,
+              const SizedBox(height: 20.0),
+              loginButton,
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
