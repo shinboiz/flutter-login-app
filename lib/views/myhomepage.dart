@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'loginresult.dart';
+// ignore: library_prefixes
+import '../utils/constants.dart' as Constants;
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -64,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => const LoginResult()));
     } else {
-      _setErrorMessage("Please enter your username and password\n\n");
+      _setErrorMessage(Constants.LOGIN_ERROR_EMPTY);
     }
   }
 
@@ -85,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
       style: style,
       decoration: const InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-          hintText: "user name"),
+          hintText: Constants.USERNAME_HINT),
       onTap: _onFocusChange,
     );
 
@@ -95,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
       style: style,
       decoration: const InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-          hintText: "password"),
+          hintText: Constants.PASSWORD_HINT),
       onTap: _onFocusChange,
     );
 
@@ -106,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
       child: MaterialButton(
         padding: const EdgeInsets.fromLTRB(30.0, 15.0, 30.0, 15.0),
         onPressed: () => _doLogin(context),
-        child: Text("Login",
+        child: Text(Constants.LOGIN,
             textAlign: TextAlign.center,
             style: style.copyWith(
                 color: Colors.white, fontWeight: FontWeight.bold)),
