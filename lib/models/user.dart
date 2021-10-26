@@ -1,3 +1,5 @@
+import 'package:login_app/models/codable.dart';
+
 class User {
   final int userId;
   final String userName;
@@ -15,5 +17,18 @@ class User {
       userName: json['userName'],
       age: json['age'],
     );
+  }
+}
+
+class UserEnDecoder extends Codable<User> {
+  @override
+  User fromJson(Map<String, dynamic> json) {
+    return User.fromJson(json);
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    // TODO: implement toJson
+    throw UnimplementedError();
   }
 }
