@@ -1,7 +1,7 @@
 // ignore_for_file: library_prefixes
 
 import 'package:flutter/material.dart';
-import 'package:login_app/controllers/apimanager.dart';
+import 'package:login_app/requesters/apimanager.dart';
 import 'package:login_app/models/user.dart';
 import 'package:login_app/models/error.dart';
 import 'package:login_app/utils/crypto.dart' as CryptoUtils;

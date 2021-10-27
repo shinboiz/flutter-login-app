@@ -1,10 +1,8 @@
 // ignore_for_file: library_prefixes
 
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'loginresultpage.dart';
+import 'package:login_app/controllers/myhomepagecontroller.dart';
 import 'package:login_app/utils/constants.dart' as Constants;
-import 'package:login_app/controllers/usercontroller.dart' as UserController;
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -25,68 +23,28 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   String _loginError = "";
+  final MyHomePageController _controller = MyHomePageController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   void _onFocusChange() {
     // This call to handle text field focus changed event
-    _setErrorMessage("");
+    _raiseError("");
   }
 
-  void _setErrorMessage(String errorMessage) {
+  void _raiseError(String errorMessage) {
     setState(() {
       _loginError = errorMessage;
     });
   }
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+  void _doLogin() {
+    _controller
+        .doLogin(_usernameController.text, _passwordController.text, context,
+            (errorMessage) {
+      _raiseError(errorMessage);
     });
-  }
-
-  bool _isInputValid() {
-    // This call to validate the input
-    // If the input is qualified a True will be returned, or False otherwise
-    return _usernameController.text.isNotEmpty &&
-        _passwordController.text.isNotEmpty;
-  }
-
-  void _doLogin(BuildContext context) {
-    // This call to send request login to BE if the input is good
-
-    // Reset error for another attempt
-    _setErrorMessage("");
-
-    if (_isInputValid()) {
-      EasyLoading.show(status: Constants.LOADING);
-      // Call login API
-      UserController.getUserByUserNamePassword(
-          _usernameController.text, _passwordController.text, (user) {
-        // Success case
-        EasyLoading.dismiss();
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => LoginResultPage(
-                      user: user,
-                    )));
-      }, (error) {
-        // Failure case
-        EasyLoading.dismiss();
-        _setErrorMessage(error.message);
-      });
-    } else {
-      // Validation Falied
-      _setErrorMessage(Constants.LOGIN_ERROR_EMPTY);
-    }
   }
 
   @override
@@ -126,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
       color: Colors.green,
       child: MaterialButton(
         padding: const EdgeInsets.fromLTRB(30.0, 15.0, 30.0, 15.0),
-        onPressed: () => _doLogin(context),
+        onPressed: _doLogin,
         child: Text(Constants.LOGIN,
             textAlign: TextAlign.center,
             style: style.copyWith(
@@ -181,11 +139,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
