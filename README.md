@@ -31,7 +31,7 @@ samples, guidance on mobile development, and a full API reference.
 - When user put "failure" in `user name` field, regardless non-null password.
 - Or either username or password is blank
 
-## Issues Encountered:
+## Issues Encountered
 - Handshake issue, CORS issue, Incompatible test version
 - If you're facing with the issue of version incompatible from test framework, you can try to execure following commands:
     `flutter channel dev`
