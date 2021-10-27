@@ -31,7 +31,7 @@ samples, guidance on mobile development, and a full API reference.
     `flutter upgrade`
 
 ## Technics
-- MVC, Singleton, Template Class/Method
+- MVC, Singleton, Class/Method Template 
 - Async task, Callback,
 - API request, JSON serialzer
 - Unit Test, Mockito
