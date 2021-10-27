@@ -24,6 +24,8 @@ class ApiManager {
 
   final loginAPI = "/Login/";
 
+  final _client = Http.Client();
+
   // Post Request Template
   // T: model data type
   void postRequest<T>(
@@ -32,14 +34,25 @@ class ApiManager {
       Map<String, dynamic> bodyParams,
       Serializer<T> serializer,
       ValueSetter<T> success,
+      ValueSetter<Error> failure) {
+    postRequest_(_client, apiPath, headerParams, bodyParams, serializer,
+        success, failure);
+  }
+
+  @visibleForTesting
+  void postRequest_<T>(
+      Http.Client client,
+      String apiPath,
+      Map<String, String> headerParams,
+      Map<String, dynamic> bodyParams,
+      Serializer<T> serializer,
+      ValueSetter<T> success,
       ValueSetter<Error> failure) async {
-    final Map<String, String> headers = {};
-    headers.addAll({"Content-Type": "application/json; charset=utf-8"});
-    headers.addAll(headerParams);
-    final body = json.encode(bodyParams);
+    final Map<String, String> headers = requestHeaders(headerParams);
+    final body = requestBody(bodyParams);
 
     try {
-      final response = await Http.post(
+      final response = await client.post(
         Uri.parse(endpoint + apiPath),
         headers: headers,
         body: body,
@@ -58,5 +71,18 @@ class ApiManager {
       failure(
           Error(errorCode: ErrorCode.CLIENT_ERROR, message: error.toString()));
     }
+  }
+
+  @visibleForTesting
+  Map<String, String> requestHeaders(Map<String, String> headerParams) {
+    final Map<String, String> headers = {};
+    headers.addAll({"Content-Type": "application/json; charset=utf-8"});
+    headers.addAll(headerParams);
+    return headers;
+  }
+
+  @visibleForTesting
+  String requestBody(Map<String, dynamic> bodyParams) {
+    return json.encode(bodyParams);
   }
 }

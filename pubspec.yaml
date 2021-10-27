@@ -39,9 +39,11 @@ dependencies:
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
+  flutter_test:
+    sdk: flutter
   test: ^1.17.12
-  # flutter_test:
-  #   sdk: flutter
+  mockito: ^5.0.16
+  build_runner: ^2.1.4
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

@@ -18,6 +18,17 @@ class User {
       age: json['age'],
     );
   }
+
+  @override
+  bool operator ==(other) {
+    return (other is User) &&
+        other.userId == userId &&
+        other.userName == userName &&
+        other.age == age;
+  }
+
+  @override
+  int get hashCode => age.hashCode ^ userName.hashCode ^ userId.hashCode;
 }
 
 class UserSerializer extends Serializer<User> {
