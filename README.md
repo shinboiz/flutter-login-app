@@ -4,8 +4,8 @@ A sample Flutter project.
 
 ## Getting Started
 
-This project is a sample to introduce a simple login flow
-User will provide username and password and be directed to login result page by hitting `Login` button
+This project is a sample to introduce a simple login flow.
+User will provide username and password and be directed to login result page by hitting `Login` button.
 Login Result Page will display user data which is returned from Server.
 
 In order to have a full flow of demo, please check out server code (.NET API) and run from your local:
@@ -21,7 +21,7 @@ For help getting started with Flutter, view our
 samples, guidance on mobile development, and a full API reference.
 
 ## Scenario of Failed Login
-- When user put "failure" in `user name` field, regardless non-null password
+- When user put "failure" in `user name` field, regardless non-null password.
 - Or either username or password is blank
 
 ## Issues Encountered:
