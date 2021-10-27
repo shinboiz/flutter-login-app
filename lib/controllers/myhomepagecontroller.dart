@@ -10,7 +10,7 @@ class MyHomePageController {
   bool isInputValid(String username, String password) {
     // This call to validate the input
     // If the input is qualified a True will be returned, or False otherwise
-    return username.isNotEmpty && password.isNotEmpty;
+    return username.trim().isNotEmpty && password.trim().isNotEmpty;
   }
 
   void doLogin(String username, String passowrd, BuildContext context,
