@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: library_prefixes
 
-import 'loginresult.dart';
-// ignore: library_prefixes
-import '../utils/constants.dart' as Constants;
-// ignore: library_prefixes
-import '../controllers/usercontroller.dart' as UserController;
+import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'loginresultpage.dart';
+import 'package:login_app/utils/constants.dart' as Constants;
+import 'package:login_app/controllers/usercontroller.dart' as UserController;
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -66,18 +66,25 @@ class _MyHomePageState extends State<MyHomePage> {
     _setErrorMessage("");
 
     if (_isInputValid()) {
+      EasyLoading.show(status: Constants.LOADING);
+      // Call login API
       UserController.getUserByUserNamePassword(
           _usernameController.text, _passwordController.text, (user) {
+        // Success case
+        EasyLoading.dismiss();
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => LoginResult(
+                builder: (context) => LoginResultPage(
                       user: user,
                     )));
       }, (error) {
-        _setErrorMessage(error.description);
+        // Failure case
+        EasyLoading.dismiss();
+        _setErrorMessage(error.message);
       });
     } else {
+      // Validation Falied
       _setErrorMessage(Constants.LOGIN_ERROR_EMPTY);
     }
   }

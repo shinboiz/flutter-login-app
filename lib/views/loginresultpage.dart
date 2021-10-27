@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:login_app/models/user.dart';
 
-class LoginResult extends StatelessWidget {
-  const LoginResult({Key? key, required this.user}) : super(key: key);
+class LoginResultPage extends StatelessWidget {
+  const LoginResultPage({Key? key, required this.user}) : super(key: key);
 
   final User user;
   @override
@@ -16,7 +16,10 @@ class LoginResult extends StatelessWidget {
           onPressed: () {
             Navigator.pop(context);
           },
-          child: const Text('Go back!'),
+          child: Text(
+            'User Information:\nUserId:${user.userId}\nUserName: ${user.userName}\nAge: ${user.age}',
+            style: const TextStyle(fontSize: 20.0),
+          ),
         ),
       ),
     );

@@ -1,10 +1,10 @@
+// ignore_for_file: library_prefixes
+
 import 'package:flutter/material.dart';
 import 'package:login_app/controllers/apimanager.dart';
-
-import '../models/user.dart';
-import '../models/error.dart';
-// ignore: library_prefixes
-import '../utils/crypto.dart' as CryptoUtils;
+import 'package:login_app/models/user.dart';
+import 'package:login_app/models/error.dart';
+import 'package:login_app/utils/crypto.dart' as CryptoUtils;
 
 // Future<User> getUserByUserNamePassword(String username, String password) async {
 //   final response = await http
@@ -21,6 +21,12 @@ import '../utils/crypto.dart' as CryptoUtils;
 //   }
 // }
 
+// get user by username and password
+// params:
+// ** username
+// ** password
+// ** success: callback when succeed
+// ** failure: callback when error occurred
 void getUserByUserNamePassword(String username, String password,
     ValueSetter<User> success, ValueSetter<Error> failure) {
   Map<String, dynamic> params = {
@@ -28,5 +34,5 @@ void getUserByUserNamePassword(String username, String password,
     'password': CryptoUtils.hash(password), // Secure user password
   };
   ApiManager().postRequest<User>(
-      ApiManager().loginAPI, params, UserEnDecoder(), success, failure);
+      ApiManager().loginAPI, {}, params, UserSerializer(), success, failure);
 }

@@ -1,16 +1,16 @@
 class Error {
   final int errorCode;
-  final String description;
+  final String message;
 
   Error({
     required this.errorCode,
-    required this.description,
+    required this.message,
   });
 
   factory Error.fromJson(Map<String, dynamic> json) {
     return Error(
       errorCode: json['errorCode'],
-      description: json['description'],
+      message: json['message'],
     );
   }
 }

@@ -1,7 +1,16 @@
+// ignore_for_file: library_prefixes
+
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'views/myhomepage.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:login_app/utils/myhttp.dart';
+import 'package:login_app/views/myhomepage.dart';
+import 'package:login_app/utils/constants.dart' as Constants;
 
 void main() {
+  // Custom HttpOverrides to resolve handshake issue
+  HttpOverrides.global = MyHttpOverrides();
   runApp(const MyApp());
 }
 
@@ -16,7 +25,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: const MyHomePage(title: 'Flutter Login'),
+      home: const MyHomePage(title: Constants.LOGIN),
+      builder: EasyLoading.init(),
     );
   }
 }

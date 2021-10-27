@@ -1,13 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+// ignore_for_file: library_prefixes
+
 import 'dart:convert';
-
-import 'package:login_app/models/user.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as Http;
 import 'package:login_app/models/error.dart';
-import 'package:login_app/models/codable.dart';
-// ignore: library_prefixes
-import '../utils/errorcodes.dart' as ErrorCode;
+import 'package:login_app/models/serializer.dart';
+import 'package:login_app/utils/errorcodes.dart' as ErrorCode;
 
+// Api Manager
+// configure endpoint
+// define Web API paths
+// template for http methods
 class ApiManager {
   static final ApiManager _singleton = ApiManager._internal();
 
@@ -19,21 +22,32 @@ class ApiManager {
 
   String endpoint = "https://localhost:5001";
 
-  final loginAPI = "/Login";
+  final loginAPI = "/Login/";
 
+  // Post Request Template
+  // T: model data type
   void postRequest<T>(
       String apiPath,
-      Map<String, dynamic> params,
-      Codable<T> codable,
+      Map<String, String> headerParams,
+      Map<String, dynamic> bodyParams,
+      Serializer<T> serializer,
       ValueSetter<T> success,
       ValueSetter<Error> failure) async {
-    final response = await http.post(Uri.parse(endpoint + apiPath));
+    final Map<String, String> headers = {};
+    headers.addAll({"Content-Type": "application/json; charset=utf-8"});
+    headers.addAll(headerParams);
+    final body = json.encode(bodyParams);
 
     try {
-      if (response.statusCode == 200) {
+      final response = await Http.post(
+        Uri.parse(endpoint + apiPath),
+        headers: headers,
+        body: body,
+      );
+      if (response.statusCode >= 200 && response.statusCode < 300) {
         // If the server did return a 200 OK response,
         // then parse the JSON.
-        final anObject = codable.fromJson(jsonDecode(response.body));
+        final anObject = serializer.fromJson(jsonDecode(response.body));
         success(anObject);
       } else {
         // If the server did not return a 200 OK response,
@@ -41,8 +55,8 @@ class ApiManager {
         failure(error);
       }
     } catch (error) {
-      failure(Error(
-          errorCode: ErrorCode.CLIENT_ERROR, description: error.toString()));
+      failure(
+          Error(errorCode: ErrorCode.CLIENT_ERROR, message: error.toString()));
     }
   }
 }

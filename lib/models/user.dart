@@ -1,7 +1,7 @@
-import 'package:login_app/models/codable.dart';
+import 'package:login_app/models/serializer.dart';
 
 class User {
-  final int userId;
+  final String userId;
   final String userName;
   final int age;
 
@@ -20,7 +20,7 @@ class User {
   }
 }
 
-class UserEnDecoder extends Codable<User> {
+class UserSerializer extends Serializer<User> {
   @override
   User fromJson(Map<String, dynamic> json) {
     return User.fromJson(json);
