@@ -22,6 +22,11 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+## How to run
+- Copy the source code into the directory where `flutter` sdk directory is been
+- Open the source code with Visual Studio Code
+- You might be asked to install missing assets from Dart, please allow to proceed
+
 ## Scenario of Failed Login
 - When user put "failure" in `user name` field, regardless non-null password.
 - Or either username or password is blank
