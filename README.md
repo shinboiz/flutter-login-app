@@ -11,6 +11,8 @@ Login Result Page will display user data which is returned from Server.
 In order to have a full flow of demo, please check out server code (.NET API) and run from your local:
 https://github.com/shinboiz/net-api-login-server
 
+![Uploading Screen Shot 2021-10-28 at 12.56.50 AM.png…]()
+
 A few resources to get you started if this is your first Flutter project:
 
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
