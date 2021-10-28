@@ -18,7 +18,7 @@ A few resources to get you started if this is your first Flutter project:
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
+For help getting started with Flutter, view
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
@@ -31,7 +31,7 @@ samples, guidance on mobile development, and a full API reference.
 - When user put "failure" in `user name` field, regardless non-null password.
 - Or either username or password is blank
 
-## Issues Encountered
+## Issues Encountered and Fixed during Development
 - Handshake issue, CORS issue, Incompatible test version
 - If you're facing with the issue of version incompatible from test framework, you can try to execure following commands:
     `flutter channel dev`
